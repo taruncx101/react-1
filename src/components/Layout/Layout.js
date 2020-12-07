@@ -4,10 +4,10 @@ import Header from "../Header/Header";
 export default class Layout extends React.Component{
     render() {
         return (
-            <React.Fragment>
-                <Header />
-                {this.props.children}
-            </React.Fragment>
+          <React.Fragment>
+            <Header />
+            <div className="container">{this.props.children}</div>
+          </React.Fragment>
         );
     }
 }

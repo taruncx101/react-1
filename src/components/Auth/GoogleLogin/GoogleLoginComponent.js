@@ -21,7 +21,6 @@ function GoogleLoginComponent() {
   };
 
   return (
-    <div>
       <GoogleLogin
         clientId={clientId}
         buttonText="Login"
@@ -31,7 +30,6 @@ function GoogleLoginComponent() {
         style={{ marginTop: "100px" }}
         isSignedIn={true}
       />
-    </div>
   );
 }
 

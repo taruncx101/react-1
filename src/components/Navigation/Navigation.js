@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 const navLeftSideItems = [
   { id: "home", text: "Home", link: "/", auth: false },
   { id: "users", text: "Users", link: "/users", auth: true },
@@ -16,9 +17,9 @@ const navRightSideItems = [
            .filter((item) => true)
            .map((item) => (
              <li className="nav-item" key={item.id}>
-               <a className="nav-link" href="#">
+               <NavLink to={item.link} className="nav-link">
                  {item.text}
-               </a>
+               </NavLink>
              </li>
            )),
        ]}
@@ -29,9 +30,9 @@ const navRightSideItems = [
            .filter((item) => true)
            .map((item) => (
              <li className="nav-item" key={item.id}>
-               <a className="nav-link" href="#">
+               <NavLink to={item.link} className="nav-link">
                  {item.text}
-               </a>
+               </NavLink>
              </li>
            )),
        ]}
