@@ -1,8 +1,13 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.css";
 import './App.css';
 import GoogleLoginComponent from "./components/GoogleLoginComponent";
 import Layout from "./components/Layout/Layout"
+import Users from './pages/User/Users'
+import Signup from "./pages/Auth/Signup";
+
 class App extends React.Component {
   state = {
     showBackdrop: false,
@@ -23,13 +28,24 @@ class App extends React.Component {
   }
   render() {
     return (
-      <React.Fragment>
-          <Layout/>
+      <Router>
+        <Layout>
+          <Switch>
+            <Route exact path="/">
+              <Users />
+            </Route>
+            <Route path="/login">
+              <Signup />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+          </Switch>
+        </Layout>
         <div className="container">
-          <h1>Hello</h1>
           <GoogleLoginComponent />
         </div>
-      </React.Fragment>
+      </Router>
     );
   }
 }

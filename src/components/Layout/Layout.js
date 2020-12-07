@@ -5,7 +5,8 @@ export default class Layout extends React.Component{
     render() {
         return (
             <React.Fragment>
-                <Header/>
+                <Header />
+                {this.props.children}
             </React.Fragment>
         );
     }
