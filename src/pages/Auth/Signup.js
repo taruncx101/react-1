@@ -16,7 +16,6 @@ export default class Signup extends React.Component {
     this.resetForm = this.resetForm.bind(this);
   }
   onChangeInputValue(e) {
-    console.log("onChangeInputValue");
     let obj = {};
     obj[e.target.name] = e.target.value;
     this.setState({ userData: { ...this.state.userData, ...obj } });
@@ -24,26 +23,32 @@ export default class Signup extends React.Component {
   async onSubmit(e) {
     console.log("onSubmit");
     e.preventDefault();
-    const baseUrl = "http://localhost:8080"; 
-    const url = baseUrl+"/auth/signup";
+    const baseUrl = "http://localhost:8080";
+    const urlSegment = this.props.isLoginPage ? 'login' : 'signup';
+    const method = this.props.isLoginPage ? 'post' : 'put';
+    const url = `${baseUrl}/auth/${urlSegment}`;
     const res = await fetch(url, {
-      method: "put",
+      method,
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state.userData)
     })
     if (res.status === 201) {
-    /** the success */
-      console.log('success');
+      /** the success */
+      console.log("success");
       this.resetForm();
     }
-    else if( res.status === 422) {
-    /** validation error */
-      console.log('validation error');
+    else if (res.status === 401) {
+      /** unauthorize */
+      console.log("unauthorize");
+    }
+    else if (res.status === 422) {
+      /** validation error */
+      console.log("validation error");
     }
     else {
-    /** most probably 500 error */
+      /** most probably 500 error */
       console.log("server side error");
     }
     console.log(res)
