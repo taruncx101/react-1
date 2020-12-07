@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import GoogleLoginComponent from "./components/GoogleLoginComponent";
+import Layout from "./components/Layout/Layout"
+class App extends React.Component {
+  state = {
+    showBackdrop: false,
+    showMobileNav: false,
+    isAuth: false,
+    token: null,
+    userId: null,
+    authLoading: false,
+    error: null,
+    apiBaseUrl: "http://localhost:8001",
+  };
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+    this.setState({ isAuth: true, token: token });
+  }
+  render() {
+    return (
+      <React.Fragment>
+          <Layout/>
+        <div className="container">
+          <h1>Hello</h1>
+          <GoogleLoginComponent />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
