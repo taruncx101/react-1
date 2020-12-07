@@ -20,12 +20,34 @@ export default class Signup extends React.Component {
     let obj = {};
     obj[e.target.name] = e.target.value;
     this.setState({ userData: { ...this.state.userData, ...obj } });
-    console.log(this.state);
   }
-  onSubmit(e) {
+  async onSubmit(e) {
     console.log("onSubmit");
     e.preventDefault();
-    this.resetForm();
+    const baseUrl = "http://localhost:8080"; 
+    const url = baseUrl+"/auth/signup";
+    const res = await fetch(url, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state.userData)
+    })
+    if (res.status === 201) {
+    /** the success */
+      console.log('success');
+      this.resetForm();
+    }
+    else if( res.status === 422) {
+    /** validation error */
+      console.log('validation error');
+    }
+    else {
+    /** most probably 500 error */
+      console.log("server side error");
+    }
+    console.log(res)
+    
   }
   resetForm() {
     this.setState({
