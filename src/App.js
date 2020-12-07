@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 import './App.css';
@@ -41,8 +41,6 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Layout>
-        <div className="container">
-        </div>
       </Router>
     );
   }
