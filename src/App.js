@@ -1,10 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  withRouter,
+} from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 import './App.css';
 import Layout from "./components/Layout/Layout"
 import Users from './pages/User/Users'
+import Home from "./pages/Home/Home";
 import Signup from "./pages/Auth/Signup";
 
 class App extends React.Component {
@@ -26,6 +31,11 @@ class App extends React.Component {
       this.setToken(token);
     }
   }
+  onLoginSuccess = (token) => {
+    this.setToken(token);
+    this.props.history.push("/Home");
+    
+  }
   setToken(token) {
     this.setState({ isAuth: true, token: token });
     localStorage.setItem("token", token);
@@ -33,37 +43,42 @@ class App extends React.Component {
   logoutHandler = () => {
     this.setState({ isAuth: false, token: null });
     localStorage.removeItem("token");
+    this.props.history.push("/Home");
   };
   render() {
     return (
-      <Router>
-        <Layout isAuth={this.state.isAuth} logoutHandler={this.logoutHandler}>
-          <Switch>
-            <Route exact path="/">
-              <Users
-                token={this.state.token}
-                apiBaseUrl={this.state.apiBaseUrl}
-              />
-            </Route>
-            <Route path="/login">
-              <Signup
-                isLoginPage={true}
-                apiBaseUrl={this.state.apiBaseUrl}
-                setToken={this.setToken}
-              />
-            </Route>
-            <Route path="/signup">
-              <Signup
-                isLoginPage={false}
-                apiBaseUrl={this.state.apiBaseUrl}
-                setToken={this.setToken}
-              />
-            </Route>
-          </Switch>
-        </Layout>
-      </Router>
+      <Layout isAuth={this.state.isAuth} logoutHandler={this.logoutHandler}>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/users">
+            <Users
+              token={this.state.token}
+              apiBaseUrl={this.state.apiBaseUrl}
+            />
+          </Route>
+          <Route path="/login">
+            <Signup
+              isLoginPage={true}
+              apiBaseUrl={this.state.apiBaseUrl}
+              onLoginSuccess={this.onLoginSuccess}
+            />
+          </Route>
+          <Route path="/signup">
+            <Signup
+              isLoginPage={false}
+              apiBaseUrl={this.state.apiBaseUrl}
+              onLoginSuccess={this.onLoginSuccess}
+            />
+          </Route>
+        </Switch>
+      </Layout>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

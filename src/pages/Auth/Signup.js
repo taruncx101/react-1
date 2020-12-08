@@ -37,9 +37,8 @@ export default class Signup extends React.Component {
       /** the success */
       console.log("success");
       const result = await res.json();
-      this.props.setToken(result.token);
-      console.log(result)
       this.resetForm();
+      this.props.onLoginSuccess(result.token);
     }
     else if (res.status === 401) {
       /** unauthorize */
