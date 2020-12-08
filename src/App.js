@@ -33,7 +33,7 @@ class App extends React.Component {
   }
   onLoginSuccess = (token) => {
     this.setToken(token);
-    this.props.history.push("/Home");
+    this.props.history.push("/users");
     
   }
   setToken(token) {
@@ -43,7 +43,7 @@ class App extends React.Component {
   logoutHandler = () => {
     this.setState({ isAuth: false, token: null });
     localStorage.removeItem("token");
-    this.props.history.push("/Home");
+    this.props.history.push("/home");
   };
   render() {
     return (
