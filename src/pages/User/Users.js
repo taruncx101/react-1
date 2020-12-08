@@ -42,7 +42,7 @@ componentDidMount() {
             <h5>Total: {this.state.totalUsers}</h5>
           </div>
           {this.state.users.map((user) => (
-            <UserCard user={user} />
+              <UserCard user={user} key={ user.id }/>
           ))}
           <div className="col-sm-12"></div>
         </div>
