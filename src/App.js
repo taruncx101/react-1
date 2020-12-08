@@ -55,12 +55,17 @@ class App extends React.Component {
           <Route exact path="/home">
             <Home />
           </Route>
+          {
+            this.state.isAuth ? 
           <Route exact path="/users">
             <Users
               token={this.state.token}
               apiBaseUrl={this.state.apiBaseUrl}
             />
-          </Route>
+              </Route>
+              :null
+          }
+
           <Route path="/login">
             <Signup
               isLoginPage={true}

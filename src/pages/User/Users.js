@@ -12,7 +12,7 @@ export default class Users extends React.Component {
 componentDidMount() {
     this.loadUsers(1);    
 }
-  loadUsers = (page) => {
+    loadUsers = (page) => {
     const url = `${this.props.apiBaseUrl}/user/user-list?page=${page}`;
     fetch(url, {
       headers: {
