@@ -1,13 +1,11 @@
 import React from "react";
 import Header from "../Header/Header";
 
-export default class Layout extends React.Component{
-    render() {
-        return (
+export default function Layout(props) {
+          return (
           <React.Fragment>
-            <Header />
-            <div className="container">{this.props.children}</div>
+            <Header {...props}/>
+            <div className="container">{props.children}</div>
           </React.Fragment>
         );
-    }
 }

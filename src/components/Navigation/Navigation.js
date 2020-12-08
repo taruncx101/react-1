@@ -14,7 +14,7 @@ const navRightSideItems = [
      <ul className="navbar-nav">
        {[
          ...navLeftSideItems
-           .filter((item) => true)
+           .filter((item) => props.isAuth === item.auth)
            .map((item) => (
              <li className="nav-item" key={item.id}>
                <NavLink to={item.link} className="nav-link">
@@ -27,7 +27,7 @@ const navRightSideItems = [
      <ul className="navbar-nav ml-auto">
        {[
          ...navRightSideItems
-           .filter((item) => true)
+           .filter((item) => props.isAuth === item.auth)
            .map((item) => (
              <li className="nav-item" key={item.id}>
                <NavLink to={item.link} className="nav-link">
@@ -35,6 +35,16 @@ const navRightSideItems = [
                </NavLink>
              </li>
            )),
+         props.isAuth && (
+           <li className="nav-item" key="logout">
+             <button
+               className="nav-link btn btn-light"
+               onClick={props.logoutHandler}
+             >
+               Logout
+             </button>
+           </li>
+         ),
        ]}
      </ul>
    </React.Fragment>

@@ -14,28 +14,50 @@ class App extends React.Component {
     userId: null,
     authLoading: false,
     error: null,
-    apiBaseUrl: "http://localhost:8000",
+    apiBaseUrl: "http://localhost:8080",
   };
   componentDidMount() {
+    this.setToken = this.setToken.bind(this);
     const token = localStorage.getItem("token");
-    if (!token) {
-      return;
+    if (token) {
+      /** need to do couple of things get user by token
+       * need to check the token is expire or not
+       */
+      this.setToken(token);
     }
-    this.setState({ isAuth: true, token: token });
   }
+  setToken(token) {
+    this.setState({ isAuth: true, token: token });
+    localStorage.setItem("token", token);
+  }
+  logoutHandler = () => {
+    this.setState({ isAuth: false, token: null });
+    localStorage.removeItem("token");
+  };
   render() {
     return (
       <Router>
-        <Layout>
+        <Layout isAuth={this.state.isAuth} logoutHandler={this.logoutHandler}>
           <Switch>
             <Route exact path="/">
-              <Users />
+              <Users
+                token={this.state.token}
+                apiBaseUrl={this.state.apiBaseUrl}
+              />
             </Route>
             <Route path="/login">
-              <Signup isLoginPage={true} />
+              <Signup
+                isLoginPage={true}
+                apiBaseUrl={this.state.apiBaseUrl}
+                setToken={this.setToken}
+              />
             </Route>
             <Route path="/signup">
-              <Signup isLoginPage={false} />
+              <Signup
+                isLoginPage={false}
+                apiBaseUrl={this.state.apiBaseUrl}
+                setToken={this.setToken}
+              />
             </Route>
           </Switch>
         </Layout>

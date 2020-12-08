@@ -1,5 +1,5 @@
 import Navigation from "../Navigation/Navigation";
-function Header() { 
+function Header(props) { 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="#">
@@ -17,7 +17,7 @@ function Header() {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-            <Navigation/>
+          <Navigation {...props}/>
         </div>
       </nav>
     );

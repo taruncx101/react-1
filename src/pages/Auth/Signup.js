@@ -23,10 +23,9 @@ export default class Signup extends React.Component {
   async onSubmit(e) {
     console.log("onSubmit");
     e.preventDefault();
-    const baseUrl = "http://localhost:8080";
     const urlSegment = this.props.isLoginPage ? 'login' : 'signup';
     const method = this.props.isLoginPage ? 'post' : 'put';
-    const url = `${baseUrl}/auth/${urlSegment}`;
+    const url = `${this.props.apiBaseUrl}/auth/${urlSegment}`;
     const res = await fetch(url, {
       method,
       headers: {
@@ -34,9 +33,12 @@ export default class Signup extends React.Component {
       },
       body: JSON.stringify(this.state.userData)
     })
-    if (res.status === 201) {
+    if ([200, 201].includes(res.status) ) {
       /** the success */
       console.log("success");
+      const result = await res.json();
+      this.props.setToken(result.token);
+      console.log(result)
       this.resetForm();
     }
     else if (res.status === 401) {
