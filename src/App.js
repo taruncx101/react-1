@@ -9,14 +9,12 @@ import Signup from "./pages/Auth/Signup";
 
 class App extends React.Component {
   state = {
-    showBackdrop: false,
-    showMobileNav: false,
     isAuth: false,
     token: null,
     userId: null,
     authLoading: false,
     error: null,
-    apiBaseUrl: "http://localhost:8001",
+    apiBaseUrl: "http://localhost:8000",
   };
   componentDidMount() {
     const token = localStorage.getItem("token");
