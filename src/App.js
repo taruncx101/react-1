@@ -19,9 +19,11 @@ class App extends React.Component {
     userId: null,
     authLoading: false,
     error: null,
-    apiBaseUrl: "http://localhost:8080",
+    apiBaseUrl: process.env.REACT_APP_API_URL || "http://localhost:8080",
   };
   componentDidMount() {
+    console.log("process.env.API_URL");
+    console.log(process.env);
     this.setToken = this.setToken.bind(this);
     const token = localStorage.getItem("token");
     if (token) {
@@ -34,8 +36,7 @@ class App extends React.Component {
   onLoginSuccess = (token) => {
     this.setToken(token);
     this.props.history.push("/users");
-    
-  }
+  };
   setToken(token) {
     this.setState({ isAuth: true, token: token });
     localStorage.setItem("token", token);
@@ -55,16 +56,14 @@ class App extends React.Component {
           <Route exact path="/home">
             <Home />
           </Route>
-          {
-            this.state.isAuth ? 
-          <Route exact path="/users">
-            <Users
-              token={this.state.token}
-              apiBaseUrl={this.state.apiBaseUrl}
-            />
-              </Route>
-              :null
-          }
+          {this.state.isAuth ? (
+            <Route exact path="/users">
+              <Users
+                token={this.state.token}
+                apiBaseUrl={this.state.apiBaseUrl}
+              />
+            </Route>
+          ) : null}
 
           <Route path="/login">
             <Signup
