@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Switch,
-  Route,
-  withRouter,
-} from "react-router-dom";
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 import './App.css';
@@ -63,21 +59,26 @@ class App extends React.Component {
                 apiBaseUrl={this.state.apiBaseUrl}
               />
             </Route>
-          ) : null}
-
-          <Route path="/login">
-            <Signup
-              isLoginPage={true}
-              apiBaseUrl={this.state.apiBaseUrl}
-              onLoginSuccess={this.onLoginSuccess}
-            />
-          </Route>
-          <Route path="/signup">
-            <Signup
-              isLoginPage={false}
-              apiBaseUrl={this.state.apiBaseUrl}
-              onLoginSuccess={this.onLoginSuccess}
-            />
+          ) : (
+            <React.Fragment>
+              <Route path="/login">
+                <Signup
+                  isLoginPage={true}
+                  apiBaseUrl={this.state.apiBaseUrl}
+                  onLoginSuccess={this.onLoginSuccess}
+                />
+              </Route>
+              <Route path="/signup">
+                <Signup
+                  isLoginPage={false}
+                  apiBaseUrl={this.state.apiBaseUrl}
+                  onLoginSuccess={this.onLoginSuccess}
+                />
+              </Route>
+            </React.Fragment>
+          )}
+          <Route path="/">
+            <Redirect to="/home" />
           </Route>
         </Switch>
       </Layout>
