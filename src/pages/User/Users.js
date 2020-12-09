@@ -38,8 +38,12 @@ componentDidMount() {
         return res.json();
       })
       .then((resData) => {
+        const users = resData.rows.map(o => {
+          o.dateString = new Date(o.createdAt).toDateString();
+          return o;
+        })
         this.setState({
-          users: resData.rows,
+          users: users,
           totalUsers: resData.count,
           currentPage: page,
         });

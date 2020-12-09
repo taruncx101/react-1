@@ -18,8 +18,6 @@ class App extends React.Component {
     apiBaseUrl: process.env.REACT_APP_API_URL || "http://localhost:8080",
   };
   componentDidMount() {
-    console.log("process.env.API_URL");
-    console.log(process.env);
     this.setToken = this.setToken.bind(this);
     const token = localStorage.getItem("token");
     if (token) {
