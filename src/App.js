@@ -7,7 +7,7 @@ import Layout from "./components/Layout/Layout"
 import Users from './pages/User/Users'
 import Home from "./pages/Home/Home";
 import Signup from "./pages/Auth/Signup";
-
+import UserDetail from "./components/User/UserDetail";
 class App extends React.Component {
   state = {
     isAuth: false,
@@ -51,11 +51,16 @@ class App extends React.Component {
             <Home />
           </Route>
           {this.state.isAuth ? (
-            <Route exact path="/users">
+            <Route path="/users">
               <Users
                 token={this.state.token}
                 apiBaseUrl={this.state.apiBaseUrl}
               />
+              <Switch>
+                <Route exact path="/users/:id">
+                  <UserDetail {...this.props} />
+                </Route>
+              </Switch>
             </Route>
           ) : (
             <React.Fragment>

@@ -1,6 +1,11 @@
 import React from 'react';
+import {
+  Switch,
+  Route,
+} from "react-router-dom";
 import { io } from "socket.io-client";
 import UserCard from '../../components/User/UserCard'
+import UserDetail from '../../components/User/UserDetail';
 export default class Users extends React.Component {
   constructor(props) {
     super(props);
@@ -54,16 +59,19 @@ componentDidMount() {
   };
     render() {
       return (
-        <div className="row">
-          <div className="col-sm-12" style={{ paddingTop: "50px" }}>
-            {this.state.showUserAdded && <p>New User!!!</p>}
-            <h5>Total: {this.state.totalUsers}</h5>
+        <React.Fragment>
+          <div className="row">
+            <div className="col-sm-12" style={{ paddingTop: "50px" }}>
+              {this.state.showUserAdded && <p>New User!!!</p>}
+              <h5>Total: {this.state.totalUsers}</h5>
+            </div>
+            {this.state.users.map((user) => (
+              <UserCard user={user} key={user.id} />
+            ))}
+            <div className="col-sm-12">{/* pagination */}</div>
           </div>
-          {this.state.users.map((user) => (
-            <UserCard user={user} key={user.id} />
-          ))}
-          <div className="col-sm-12"></div>
-        </div>
+          {this.props.children}
+        </React.Fragment>
       );
   }
 }
