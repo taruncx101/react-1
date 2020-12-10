@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import { io } from "socket.io-client";
 import UserCard from '../../components/User/UserCard'
-import UserDetail from '../../components/User/UserDetail';
+import Pagination from '../../components/Helper/Pagination'
 export default class Users extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +13,7 @@ export default class Users extends React.Component {
         users: [],
         totalUsers: 0,
         currentPage: 1,
+        perPage: 4,
         showUserAdded: false,
     };
   }
@@ -68,7 +69,14 @@ componentDidMount() {
             {this.state.users.map((user) => (
               <UserCard user={user} key={user.id} />
             ))}
-            <div className="col-sm-12">{/* pagination */}</div>
+            <div className="col-sm-12" style={{ marginTop: "15px" }}>
+              <Pagination
+                total={this.state.totalUsers}
+                currentPage={this.state.currentPage}
+                perPage={this.state.perPage}
+                changePage={this.loadUsers}
+              />
+            </div>
           </div>
           {this.props.children}
         </React.Fragment>
