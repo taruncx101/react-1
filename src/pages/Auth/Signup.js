@@ -21,7 +21,6 @@ export default class Signup extends React.Component {
     this.setState({ userData: { ...this.state.userData, ...obj } });
   }
   async onSubmit(e) {
-    console.log("onSubmit");
     e.preventDefault();
     const urlSegment = this.props.isLoginPage ? 'login' : 'signup';
     const method = this.props.isLoginPage ? 'post' : 'put';
@@ -33,7 +32,15 @@ export default class Signup extends React.Component {
       },
       body: JSON.stringify(this.state.userData)
     })
-    if ([200, 201].includes(res.status) ) {
+    this.parseAuthResponse(res);
+  }
+  googleLogin = async (token) => {
+    const url = `${this.props.apiBaseUrl}/auth/google-login?google_auth_token=${token}`;
+    const res = await fetch(url);
+    this.parseAuthResponse(res);
+  }
+  parseAuthResponse = async (res) => {
+        if ([200, 201].includes(res.status) ) {
       /** the success */
       console.log("success");
       const result = await res.json();
@@ -53,7 +60,6 @@ export default class Signup extends React.Component {
       console.log("server side error");
     }
     console.log(res)
-    
   }
   resetForm() {
     this.setState({
@@ -112,7 +118,7 @@ export default class Signup extends React.Component {
         >
           {this.props.isLoginPage ? "Login" : "Sign Up"}
         </button>
-        <GoogleLoginComponent />
+        <GoogleLoginComponent googleLogin={ this.googleLogin }/>
       </form>
     );
   }
